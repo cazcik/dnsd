@@ -1,16 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 
 	"github.com/cazcik/utils/handler"
 )
-
-type DNSData struct {
-	Host string
-}
 
 func main() {
 	web := func(w http.ResponseWriter, r *http.Request) {
@@ -21,6 +18,7 @@ func main() {
 	results := func(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("views/results.html"))
 		domain := r.PostFormValue("domain")
+		fmt.Printf("lookup: %s\n", domain)
 		response := handler.GetDomain(domain)
 		tmpl.Execute(w, response)
 	}
