@@ -1,18 +1,15 @@
 package handler
 
 import (
-	"encoding/json"
 	"log"
 	"math"
 
-	"github.com/gofiber/fiber/v2"
 	miekgdns "github.com/miekg/dns"
 	"github.com/projectdiscovery/dnsx/libs/dnsx"
 	"github.com/projectdiscovery/retryabledns"
 )
 
-func GetDomain(c *fiber.Ctx) error {
-	domain := c.Params("domain")
+func GetDomain(domain string) *retryabledns.DNSData {
 	dnsClient := SetupClients()
 
 	response, err := getResponse(dnsClient, domain)
@@ -20,14 +17,7 @@ func GetDomain(c *fiber.Ctx) error {
 		log.Fatal(err)
 	}
 
-	resultsJsonBytes, err := json.Marshal(response)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	resultsJsonString := json.RawMessage(resultsJsonBytes)
-
-	return c.JSON(resultsJsonString)
+	return response
 }
 
 func SetupClients() (*dnsx.DNSX) {

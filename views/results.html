@@ -1,0 +1,20 @@
+<div>
+  <h1 class="text-white font-bold text-2xl mb-2">{{ .Host }}</h1>
+</div>
+<div class="mt-4">
+  <h2 class="font-bold text-white">NS Records</h2>
+  <table class="mt-4 table-auto w-full">
+    <thead>
+      <tr class="border border-neutral-700 rounded-md">
+        <th class="text-xs uppercase text-white py-2 text-left px-4">Host</th>
+      </tr>
+    </thead>
+    <tbody class="pt-4 divide-y divide-neutral-700">
+      {{ range .NS }}
+      <tr>
+        <td class="text-left py-2 px-4">{{ . }}</td>
+      </tr>
+      {{ end}}
+    </tbody>
+  </table>
+</div>

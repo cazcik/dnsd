@@ -1,38 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  class="bg-neutral-900 text-neutral-100 selection:text-neutral-900 selection:bg-green-300 antialiased smooth-scroll"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
     <title>utils</title>
   </head>
-  <body
-    class="bg-neutral-900 text-neutral-500 antialiased smooth-scroll selection:bg-neutral-600"
-  >
-    <div class="flex min-h-screen">
-      <main class="m-auto px-5">
+  <body class="flex flex-col min-h-screen">
+    <header class="mx-5 my-3">
+      <nav class="flex items-center justify-between">
         <div>
-          <div>
-            <h1 class="font-black text-white">simple, dns research</h1>
+          <a
+            href="/"
+            class="text-white hover:text-neutral-100 text-xl font-black"
+            >utils</a
+          >
+        </div>
+        <div class="flex items-center space-x-4">
+          <a
+            href="/about"
+            class="text-neutral-500 hover:text-neutral-400 font-medium"
+            >about</a
+          >
+          <a
+            href="/contact"
+            class="text-neutral-500 hover:text-neutral-400 font-medium"
+            >contact</a
+          >
+        </div>
+      </nav>
+    </header>
+    <main class="grow">
+      <div class="my-28 mx-5">
+        <div class="flex flex-col w-full">
+          <div class="flex items-center justify-center">
+            <h1 class="text-white font-black text-xl">simple, dns research</h1>
           </div>
-          <div class="flex flex-col mt-2">
-            <div class="flex">
+          <form
+            hx-post="/domain/"
+            hx-target="#result"
+            class="mt-4 flex items-center justify-center"
+          >
+            <div class="ltr">
               <input
                 type="text"
+                name="domain"
+                class="bg-neutral-600 text-white placeholder:text-neutral-500 px-4 py-2 focus:outline-none rounded-s-md"
                 placeholder="example.org"
-                class="text-neutral-100 placeholder:text-neutral-400 bg-neutral-700 rounded-md border border-neutral-800 focus:ring-0 focus:ring-offset-0 focus:outline-none px-3 py-2 w-full"
               />
             </div>
-            <div class="flex mt-2">
-              <button
-                class="px-3 py-2 w-full bg-neutral-800 hover:bg-opacity-90 rounded-md focus:ring-0 focus:ring-offset-0 focus:outline-none"
-              >
-                <span class="text-neutral-100">search</span>
-              </button>
-            </div>
-          </div>
+            <button
+              type="submit"
+              class="block bg-neutral-800 hover:bg-opactiy-80 text-white font-medium px-4 py-2 focus:outline-none rounded-br-md rounded-tr-md"
+            >
+              search
+            </button>
+          </form>
+          <div id="result" class="flex flex-col mt-10"></div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
+    <footer class="mx-5 my-3">
+      <div class="flex items-center justify-center">
+        <p class="text-neutral-500 uppercase text-xs">
+          &copy; 2023 Unna Labs. All rights reserved.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

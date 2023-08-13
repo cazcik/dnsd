@@ -1,23 +1,32 @@
 package main
 
 import (
+	"html/template"
 	"log"
+	"net/http"
 
-	"github.com/cazcik/utils/router"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/template/html/v2"
+	"github.com/cazcik/utils/handler"
 )
 
+type DNSData struct {
+	Host string
+}
+
 func main() {
-	engine := html.New("./views", ".html")
+	web := func(w http.ResponseWriter, r *http.Request) {
+		tmpl := template.Must(template.ParseFiles("views/index.html"))
+		tmpl.Execute(w, nil)
+	}
 
-	app := fiber.New(fiber.Config{
-		Views: engine,
-	})
+	results := func(w http.ResponseWriter, r *http.Request) {
+		tmpl := template.Must(template.ParseFiles("views/results.html"))
+		domain := r.PostFormValue("domain")
+		response := handler.GetDomain(domain)
+		tmpl.Execute(w, response)
+	}
 
-	app.Use(cors.New())
+	http.HandleFunc("/", web)
+	http.HandleFunc("/domain/", results)
 
-	router.SetupRoutes(app)
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
