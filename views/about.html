@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-    <title>utils</title>
+    <title>about - utils</title>
   </head>
   <body class="flex flex-col min-h-screen">
     <header class="mx-5 my-3">
@@ -38,34 +38,8 @@
       <div class="my-28 mx-5">
         <div class="flex flex-col w-full">
           <div class="flex items-center justify-center">
-            <h1 class="text-black dark:text-white font-black text-xl">
-              simple, dns research
-            </h1>
+            <h1 class="text-black dark:text-white font-black text-xl">about</h1>
           </div>
-          <form
-            hx-post="/domain/"
-            hx-target="#result"
-            class="mt-4 flex items-center justify-center"
-          >
-            <div class="ltr">
-              <input
-                type="text"
-                name="domain"
-                class="bg-white dark:bg-neutral-600 text-black dark:text-white placeholder:text-neutral-500 px-4 py-2 focus:outline-none rounded-s-md"
-                placeholder="example.org"
-              />
-            </div>
-            <button
-              type="submit"
-              class="block bg-neutral-200 dark:bg-neutral-800 hover:bg-opactiy-80 text-black dark:text-white font-medium px-4 py-2 focus:outline-none rounded-br-md rounded-tr-md"
-            >
-              search
-            </button>
-          </form>
-          <div
-            id="result"
-            class="flex flex-col mt-14 max-w-3xl mx-auto w-full"
-          ></div>
         </div>
       </div>
     </main>

@@ -1,20 +1,97 @@
 <div>
-  <h1 class="text-white font-bold text-2xl mb-2">{{ .Host }}</h1>
+  <h1 class="text-black dark:text-white font-bold text-2xl mb-2">
+    {{ .Host }}
+  </h1>
 </div>
 <div class="mt-4">
-  <h2 class="font-bold text-white">NS Records</h2>
-  <table class="mt-4 table-auto w-full">
-    <thead>
-      <tr class="border border-neutral-700 rounded-md">
-        <th class="text-xs uppercase text-white py-2 text-left px-4">Host</th>
-      </tr>
-    </thead>
-    <tbody class="pt-4 divide-y divide-neutral-700">
-      {{ range .NS }}
-      <tr>
-        <td class="text-left py-2 px-4">{{ . }}</td>
-      </tr>
-      {{ end}}
-    </tbody>
-  </table>
+  <h2 class="font-bold text-black dark:text-white">NS Records</h2>
+  <div class="flex overflow-x-auto">
+    <table class="mt-4 table-auto w-full">
+      <thead>
+        <tr
+          class="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-black"
+        >
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Host
+          </th>
+        </tr>
+      </thead>
+      <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
+        {{ range .NS }}
+        <tr>
+          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+        </tr>
+        {{ end}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mt-10">
+  <h2 class="font-bold text-black dark:text-white">MX Records</h2>
+  <div class="flex overflow-x-auto">
+    <table class="mt-4 table-auto w-full">
+      <thead>
+        <tr
+          class="border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-black"
+        >
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Host
+          </th>
+        </tr>
+      </thead>
+      <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
+        {{ range .MX }}
+        <tr>
+          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+        </tr>
+        {{ end}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mt-10">
+  <h2 class="font-bold text-black dark:text-white">TXT Records</h2>
+  <div class="flex overflow-x-auto">
+    <table class="mt-4 table-auto w-full">
+      <thead>
+        <tr
+          class="border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-black"
+        >
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
+        {{ range .TXT }}
+        <tr>
+          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+        </tr>
+        {{ end}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mt-10">
+  <h2 class="font-bold text-black dark:text-white">Host Records</h2>
+  <div class="flex overflow-x-auto">
+    <table class="mt-4 table-auto w-full">
+      <thead>
+        <tr
+          class="border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-black"
+        >
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Host
+          </th>
+        </tr>
+      </thead>
+      <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
+        {{ range .A }}
+        <tr>
+          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+        </tr>
+        {{ end}}
+      </tbody>
+    </table>
+  </div>
 </div>
