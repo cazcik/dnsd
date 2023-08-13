@@ -28,14 +28,8 @@ func main() {
 		tmpl.Execute(w, nil)
 	}
 
-	contact := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("views/contact.html"))
-		tmpl.Execute(w, nil)
-	}
-
 	http.HandleFunc("/", web)
 	http.HandleFunc("/about", about)
-	http.HandleFunc("/contact", contact)
 	http.HandleFunc("/domain/", results)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
