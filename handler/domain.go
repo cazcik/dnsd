@@ -9,18 +9,17 @@ import (
 	"github.com/projectdiscovery/retryabledns"
 )
 
-func GetDomain(domain string) *retryabledns.DNSData {
-	dnsClient := SetupClients()
-
-	response, err := getResponse(dnsClient, domain)
+func GetDomain(domain string) (*retryabledns.DNSData, error) {
+	dnsClient := setupClients()
+	response, err := dnsClient.QueryMultiple(domain)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return response
+	return response, nil
 }
 
-func SetupClients() (*dnsx.DNSX) {
+func setupClients() (*dnsx.DNSX) {
 	dnsClient, err := dnsx.New(dnsx.Options{
 		BaseResolvers: dnsx.DefaultResolvers,
 		MaxRetries: 3,
@@ -35,13 +34,4 @@ func SetupClients() (*dnsx.DNSX) {
 	}
 
 	return dnsClient
-}
-
-func getResponse(client *dnsx.DNSX, domain string) (*retryabledns.DNSData, error) {
-	response, err := client.QueryMultiple(domain)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return response, nil
 }

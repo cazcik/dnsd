@@ -19,15 +19,21 @@ func main() {
 	results := func(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("views/results.html"))
 		domain := r.PostFormValue("domain")
+
 		if (!govalidator.IsDNSName(domain)) {
-			fmt.Printf("[invalid lookup]: %s\n", domain)
-			invStr := fmt.Sprintf("<p class='flex text-center text-neutral-500'>invalid domain: %s</p>", domain)
+			log.Printf("[invalid lookup]: %s\n", domain)
+			invStr := fmt.Sprintf("<div class='flex items-center justify-center'><p class='flex text-neutral-500'>invalid domain: %s</p></div>", domain)
 			tmpl, _ := template.New("invalid").Parse(invStr)
 			tmpl.Execute(w, invStr)
 			return
 		}
-		fmt.Printf("[lookup]: %s\n", domain)
-		response := handler.GetDomain(domain)
+
+		log.Printf("[lookup]: %s\n", domain)
+		response, err := handler.GetDomain(domain)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		tmpl.Execute(w, response)
 	}
 
@@ -38,7 +44,7 @@ func main() {
 
 	http.HandleFunc("/", web)
 	http.HandleFunc("/about", about)
-	http.HandleFunc("/domain/", results)
+	http.HandleFunc("/domain", results)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
