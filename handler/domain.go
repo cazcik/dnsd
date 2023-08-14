@@ -9,6 +9,7 @@ import (
 	"github.com/projectdiscovery/retryabledns"
 )
 
+// fetch the DNSData for the specified domain
 func GetDomain(domain string) (*retryabledns.DNSData, error) {
 	dnsClient := setupClients()
 	response, err := dnsClient.QueryMultiple(domain)
@@ -19,6 +20,7 @@ func GetDomain(domain string) (*retryabledns.DNSData, error) {
 	return response, nil
 }
 
+// configure dsnx client
 func setupClients() (*dnsx.DNSX) {
 	dnsClient, err := dnsx.New(dnsx.Options{
 		BaseResolvers: dnsx.DefaultResolvers,
