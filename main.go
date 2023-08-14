@@ -39,7 +39,6 @@ func main() {
 	http.HandleFunc("/", web)
 	http.HandleFunc("/about", about)
 	http.HandleFunc("/domain/", results)
-	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("static"))))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
