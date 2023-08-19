@@ -8,24 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/disable-element.js"></script>
     <link rel="icon" href="/static/favicon.ico" sizes="any" />
-    <title>dnsutils</title>
+    <title>dnsd</title>
     <meta name="description" content="Simple, DNS research" />
     <meta name="keywords" content="cybersecurity,dns,dns tools" />
-    <link rel="canonical" href="https://utils.cazcik.me" />
+    <link rel="canonical" href="https://dnsd.cazcik.me" />
 
     <!-- OpenGraph -->
-    <meta property="og:title" content="dnsutils" />
+    <meta property="og:title" content="dnsd" />
     <meta property="og:description" content="Simple, DNS research" />
-    <meta property="og:url" content="https://utils.cazcik.me" />
-    <meta property="og:site_name" content="utils" />
+    <meta property="og:url" content="https://dnsd.cazcik.me" />
+    <meta property="og:site_name" content="dnsd" />
     <meta property="og:image" content="/static/images/utils.png" />
     <meta property="og:type" content="website" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@cazcik" />
-    <meta name="twitter:title" content="dnsutils" />
+    <meta name="twitter:title" content="dnsd" />
     <meta name="twitter:description" content="Simple, DNS research" />
     <meta name="twitter:image" content="/static/images/utils.png" />
 
@@ -48,7 +49,7 @@
           <a
             href="/"
             class="text-black dark:text-white hover:text-neutral-900 dark:hover:text-neutral-100 text-xl font-black"
-            >utils</a
+            >dsnd</a
           >
         </div>
         <div class="flex items-center space-x-4">
@@ -71,6 +72,8 @@
           <form
             hx-post="/domain"
             hx-target="#result"
+            hx-ext="disable-element"
+            hx-disable-element="#button"
             class="mt-4 flex items-center justify-center"
           >
             <div class="ltr">
@@ -82,6 +85,7 @@
               />
             </div>
             <button
+              id="button"
               type="submit"
               class="block bg-neutral-200 dark:bg-neutral-800 hover:bg-opactiy-80 text-black dark:text-white font-medium px-4 py-2 focus:outline-none rounded-br-md rounded-tr-md"
             >
