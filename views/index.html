@@ -72,26 +72,35 @@
           <form
             hx-post="/domain"
             hx-target="#result"
+            hx-indicator="#spinner"
             hx-ext="disable-element"
             hx-disable-element="#button"
             class="mt-4 flex items-center justify-center"
           >
-            <div class="ltr">
-              <input
-                type="text"
-                name="domain"
-                class="bg-white dark:bg-neutral-600 text-black dark:text-white placeholder:text-neutral-500 px-4 py-2 focus:outline-none rounded-s-md"
-                placeholder="example.org"
-              />
-            </div>
+            <input
+              type="text"
+              name="domain"
+              class="bg-white dark:bg-neutral-600 dark:disabled:bg-neutral-700 text-black dark:text-white placeholder:text-neutral-500 px-4 py-2 focus:outline-none rounded-bl-md rounded-tl-md"
+              placeholder="example.org"
+            />
             <button
               id="button"
               type="submit"
-              class="block bg-neutral-200 dark:bg-neutral-800 hover:bg-opactiy-80 text-black dark:text-white font-medium px-4 py-2 focus:outline-none rounded-br-md rounded-tr-md"
+              class="block bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-opacity-80 dark:disabled:bg-neutral-950 text-black dark:text-white font-medium px-4 py-2 focus:outline-none rounded-br-md rounded-tr-md"
             >
               search
             </button>
           </form>
+          <div id="spinner" class="htmx-indicator flex items-center justify-center mt-10">
+            <div
+              class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+              role="status">
+              <span
+                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                >Loading...</span
+              >
+            </div>
+          </div>
           <div
             id="result"
             class="flex flex-col mt-14 max-w-3xl mx-auto w-full"

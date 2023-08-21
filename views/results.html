@@ -1,6 +1,6 @@
 <div>
   <h1 class="text-black dark:text-white font-bold text-2xl mb-2">
-    {{ .Host }}
+    {{ (index .host 0).Name }}
   </h1>
 </div>
 <div class="mt-4">
