@@ -53,8 +53,8 @@ func getNSRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 
 		h.Name = a
 		h.IP = ip[0]
-		h.ASNOrg = getAsnOrg(dnsClient, asnClient, ip[0])
-		h.ASNCountry = getAsnCountry(dnsClient, asnClient, ip[0])
+		h.ASNOrg = getAsnOrg(asnClient, ip[0])
+		h.ASNCountry = getAsnCountry(asnClient, ip[0])
 
 		hosts = append(hosts, h)
 	}
@@ -74,8 +74,8 @@ func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 
 		h.Name = a
 		h.IP = ip[0]
-		h.ASNOrg = getAsnOrg(dnsClient, asnClient, ip[0])
-		h.ASNCountry = getAsnCountry(dnsClient, asnClient, ip[0])
+		h.ASNOrg = getAsnOrg(asnClient, ip[0])
+		h.ASNCountry = getAsnCountry(asnClient, ip[0])
 
 		hosts = append(hosts, h)
 	}
@@ -90,8 +90,8 @@ func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *as
 
 		h.Name = r.Host
 		h.IP = a
-		h.ASNOrg = getAsnOrg(dnsClient, asnClient, a)
-		h.ASNCountry = getAsnCountry(dnsClient, asnClient, a)
+		h.ASNOrg = getAsnOrg(asnClient, a)
+		h.ASNCountry = getAsnCountry(asnClient, a)
 
 		hosts = append(hosts, h)
 	}
@@ -99,8 +99,8 @@ func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *as
 	return hosts
 }
 
-func getAsnOrg (dnsClient *dnsx.DNSX, asnClient *asnmap.Client, host string) string {
-	asn, err := asnClient.GetData(host)
+func getAsnOrg (c *asnmap.Client, host string) string {
+	asn, err := c.GetData(host)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -108,8 +108,8 @@ func getAsnOrg (dnsClient *dnsx.DNSX, asnClient *asnmap.Client, host string) str
 	return asn[0].Org
 }
 
-func getAsnCountry (dnsClient *dnsx.DNSX, asnClient *asnmap.Client, host string) string {
-	asn, err := asnClient.GetData(host)
+func getAsnCountry (c *asnmap.Client, host string) string {
+	asn, err := c.GetData(host)
 	if err != nil {
 		log.Fatal(err)
 	}
