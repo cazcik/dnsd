@@ -14,12 +14,24 @@
           <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
             Host
           </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            IP
+          </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Org
+          </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Country
+          </th>
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
-        {{ range .NS }}
+        {{ range .nameservers }}
         <tr>
-          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .Name }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .IP }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .ASNOrg }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .ASNCountry }}</td>
         </tr>
         {{ end}}
       </tbody>
@@ -37,12 +49,24 @@
           <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
             Host
           </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            IP
+          </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Org
+          </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Country
+          </th>
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
-        {{ range .MX }}
+        {{ range .mx }}
         <tr>
-          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .Name }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .IP }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .ASNOrg }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .ASNCountry }}</td>
         </tr>
         {{ end}}
       </tbody>
@@ -63,7 +87,7 @@
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
-        {{ range .TXT }}
+        {{ range .txt }}
         <tr>
           <td class="text-sm text-left py-2 px-4">{{ . }}</td>
         </tr>
@@ -83,14 +107,26 @@
           <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
             Host
           </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            IP
+          </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Org
+          </th>
+          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
+            Country
+          </th>
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
-        {{ range .A }}
+        {{ range .host }}
         <tr>
-          <td class="text-sm text-left py-2 px-4">{{ . }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .Name }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .IP }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .ASNOrg }}</td>
+          <td class="text-sm text-left py-2 px-4">{{ .ASNCountry }}</td>
         </tr>
-        {{ end}}
+        {{ end }}
       </tbody>
     </table>
   </div>
