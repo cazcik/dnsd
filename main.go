@@ -31,14 +31,14 @@ func main() {
 			return
 		}
 
-		// assuming valid domain call handler.GetDomain to retrieve the DNSData
+		// assuming valid domain call handler.GetDomain to retrieve the hosts data
 		log.Printf("[lookup]: %s\n", domain)
 		response, err := handler.GetDomain(domain)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		// execute and pass DNSData to results.html template
+		// execute and pass hosts data to results.html template
 		tmpl.Execute(w, response)
 	}
 

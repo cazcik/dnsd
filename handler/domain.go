@@ -17,7 +17,7 @@ type Host struct {
 	ASNCountry string
 }
 
-// fetch the DNSData for the specified domain
+// fetch the DNSData for the specified domain and return data for template
 func GetDomain(domain string) (map[string]interface{}, error) {
 	dnsClient, asnClient := setupClients()
 	response, err := dnsClient.QueryMultiple(domain)
@@ -40,6 +40,7 @@ func GetDomain(domain string) (map[string]interface{}, error) {
 	return r, nil
 }
 
+// fetch all NS data and return array of hosts
 func getNSRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnmap.Client) []Host {
 
 	var hosts []Host
@@ -62,6 +63,7 @@ func getNSRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 	return hosts
 }
 
+// fetch all MX records and return array of hosts
 func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnmap.Client) []Host {
 	var hosts []Host
 	for _, a := range r.MX {
@@ -83,6 +85,7 @@ func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 	return hosts
 }
 
+// fetch all host records and return array of hosts
 func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnmap.Client) []Host {
 	var hosts []Host
 	for _, a := range r.A {
@@ -99,6 +102,7 @@ func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *as
 	return hosts
 }
 
+// helper to get the ASNOrg data from an ip
 func getAsnOrg (c *asnmap.Client, host string) string {
 	asn, err := c.GetData(host)
 	if err != nil {
@@ -108,6 +112,7 @@ func getAsnOrg (c *asnmap.Client, host string) string {
 	return asn[0].Org
 }
 
+// helper to get the ASNCountry from an ip
 func getAsnCountry (c *asnmap.Client, host string) string {
 	asn, err := c.GetData(host)
 	if err != nil {
@@ -117,7 +122,7 @@ func getAsnCountry (c *asnmap.Client, host string) string {
 	return asn[0].Country
 }
 
-// configure dsnx client
+// configure dsnx and asnmap client
 func setupClients() (*dnsx.DNSX, *asnmap.Client) {
 	dnsClient, err := dnsx.New(dnsx.Options{
 		BaseResolvers: dnsx.DefaultResolvers,
