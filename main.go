@@ -42,15 +42,8 @@ func main() {
 		tmpl.Execute(w, response)
 	}
 
-	// create about.html template
-	about := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("views/about.html"))
-		tmpl.Execute(w, nil)
-	}
-
 	// routing
 	http.HandleFunc("/", web)
-	http.HandleFunc("/about", about)
 	http.HandleFunc("/domain", results)
 
 	// start the http server

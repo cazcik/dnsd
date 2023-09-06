@@ -9,26 +9,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/disable-element.js"></script>
-    <link rel="icon" href="/static/favicon.ico" sizes="any" />
     <title>dnsd</title>
-    <meta name="description" content="Simple, DNS research" />
+    <meta name="description" content="simple, dns research" />
     <meta name="keywords" content="cybersecurity,dns,dns tools" />
     <link rel="canonical" href="https://dnsd.cazcik.me" />
 
     <!-- OpenGraph -->
     <meta property="og:title" content="dnsd" />
-    <meta property="og:description" content="Simple, DNS research" />
+    <meta property="og:description" content="simple, dns research" />
     <meta property="og:url" content="https://dnsd.cazcik.me" />
     <meta property="og:site_name" content="dnsd" />
-    <meta property="og:image" content="/static/images/utils.png" />
     <meta property="og:type" content="website" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@cazcik" />
     <meta name="twitter:title" content="dnsd" />
-    <meta name="twitter:description" content="Simple, DNS research" />
-    <meta name="twitter:image" content="/static/images/utils.png" />
+    <meta name="twitter:description" content="simple, dns research" />
 
     <!-- Theme -->
     <meta
@@ -52,13 +49,7 @@
             >dsnd</a
           >
         </div>
-        <div class="flex items-center space-x-4">
-          <a
-            href="/about"
-            class="text-neutral-500 dark:hover:text-neutral-400 hover:text-neutral-600 font-medium"
-            >about</a
-          >
-        </div>
+        <div />
       </nav>
     </header>
     <main class="grow">
@@ -91,10 +82,14 @@
               search
             </button>
           </form>
-          <div id="spinner" class="htmx-indicator flex items-center justify-center mt-10">
+          <div
+            id="spinner"
+            class="htmx-indicator flex items-center justify-center mt-10"
+          >
             <div
               class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-              role="status">
+              role="status"
+            >
               <span
                 class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
                 >Loading...</span
@@ -108,12 +103,5 @@
         </div>
       </div>
     </main>
-    <footer class="mx-5 my-3">
-      <div class="flex items-center justify-center">
-        <p class="text-neutral-500 uppercase text-xs">
-          &copy; 2023 Unna Labs. All rights reserved.
-        </p>
-      </div>
-    </footer>
   </body>
 </html>
