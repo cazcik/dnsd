@@ -1,20 +1,20 @@
 module github.com/cazcik/utils
 
-go 1.20
+go 1.21
 
 require (
+	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
 	github.com/miekg/dns v1.1.55
+	github.com/projectdiscovery/asnmap v1.0.4
 	github.com/projectdiscovery/dnsx v1.1.4
 	github.com/projectdiscovery/retryabledns v1.0.34
 )
 
 require (
-	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.25 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/projectdiscovery/asnmap v1.0.4 // indirect
 	github.com/projectdiscovery/blackrock v0.0.1 // indirect
 	github.com/projectdiscovery/cdncheck v1.0.9 // indirect
 	github.com/projectdiscovery/mapcidr v1.1.2 // indirect
