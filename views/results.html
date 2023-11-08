@@ -1,6 +1,6 @@
 <div>
   <h1 class="text-black dark:text-white font-bold text-2xl mb-2">
-    {{ (index .host 0).Name }}
+    {{ .domain }}
   </h1>
 </div>
 <div class="mt-4">
@@ -17,12 +17,6 @@
           <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
             IP
           </th>
-          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
-            Org
-          </th>
-          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
-            Country
-          </th>
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
@@ -30,8 +24,6 @@
         <tr>
           <td class="text-sm text-left py-2 px-4">{{ .Name }}</td>
           <td class="text-sm text-left py-2 px-4">{{ .IP }}</td>
-          <td class="text-sm text-left py-2 px-4">{{ .ASNOrg }}</td>
-          <td class="text-sm text-left py-2 px-4">{{ .ASNCountry }}</td>
         </tr>
         {{ end}}
       </tbody>
@@ -52,12 +44,6 @@
           <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
             IP
           </th>
-          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
-            Org
-          </th>
-          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
-            Country
-          </th>
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
@@ -65,8 +51,6 @@
         <tr>
           <td class="text-sm text-left py-2 px-4">{{ .Name }}</td>
           <td class="text-sm text-left py-2 px-4">{{ .IP }}</td>
-          <td class="text-sm text-left py-2 px-4">{{ .ASNOrg }}</td>
-          <td class="text-sm text-left py-2 px-4">{{ .ASNCountry }}</td>
         </tr>
         {{ end}}
       </tbody>
@@ -91,7 +75,7 @@
         <tr>
           <td class="text-sm text-left py-2 px-4">{{ . }}</td>
         </tr>
-        {{ end}}
+        {{ end }}
       </tbody>
     </table>
   </div>
@@ -110,12 +94,6 @@
           <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
             IP
           </th>
-          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
-            Org
-          </th>
-          <th class="text-xs uppercase text-neutral-500 py-2 text-left px-4">
-            Country
-          </th>
         </tr>
       </thead>
       <tbody class="pt-4 divide-y divide-neutral-300 dark:divide-neutral-700">
@@ -123,8 +101,6 @@
         <tr>
           <td class="text-sm text-left py-2 px-4">{{ .Name }}</td>
           <td class="text-sm text-left py-2 px-4">{{ .IP }}</td>
-          <td class="text-sm text-left py-2 px-4">{{ .ASNOrg }}</td>
-          <td class="text-sm text-left py-2 px-4">{{ .ASNCountry }}</td>
         </tr>
         {{ end }}
       </tbody>

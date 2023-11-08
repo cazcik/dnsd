@@ -5,7 +5,6 @@ import (
 	"math"
 
 	miekgdns "github.com/miekg/dns"
-	asnmap "github.com/projectdiscovery/asnmap/libs"
 	"github.com/projectdiscovery/dnsx/libs/dnsx"
 	"github.com/projectdiscovery/retryabledns"
 )
@@ -13,24 +12,23 @@ import (
 type Host struct {
 	Name string
 	IP string
-	ASNOrg string
-	ASNCountry string
 }
 
 // fetch the DNSData for the specified domain and return data for template
 func GetDomain(domain string) (map[string]interface{}, error) {
-	dnsClient, asnClient := setupClients()
+	dnsClient := setupClients()
 	response, err := dnsClient.QueryMultiple(domain)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	nameservers := getNSRecords(response, dnsClient, asnClient)
-	mx := getMXRecords(response, dnsClient, asnClient)
+	nameservers := getNSRecords(response, dnsClient)
+	mx := getMXRecords(response, dnsClient)
 	txt := response.TXT
-	hosts := getHostRecords(response, dnsClient, asnClient)
+	hosts := getHostRecords(response, dnsClient)
 
 	r := map[string]interface{} {
+		"domain": domain,
 		"nameservers": nameservers,
 		"mx": mx,
 		"txt": txt,
@@ -41,21 +39,18 @@ func GetDomain(domain string) (map[string]interface{}, error) {
 }
 
 // fetch all NS data and return array of hosts
-func getNSRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnmap.Client) []Host {
-
+func getNSRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX) []Host {
 	var hosts []Host
 	for _, a := range r.NS {
 		var h Host
 
-		ip, err := dnsClient.Lookup(a)
+		ip, err := dnsClient.QueryOne(a)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		h.Name = a
-		h.IP = ip[0]
-		h.ASNOrg = getAsnOrg(asnClient, ip[0])
-		h.ASNCountry = getAsnCountry(asnClient, ip[0])
+		h.IP = ip.A[0]
 
 		hosts = append(hosts, h)
 	}
@@ -64,7 +59,7 @@ func getNSRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 }
 
 // fetch all MX records and return array of hosts
-func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnmap.Client) []Host {
+func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX) []Host {
 	var hosts []Host
 	for _, a := range r.MX {
 		var h Host
@@ -76,8 +71,6 @@ func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 
 		h.Name = a
 		h.IP = ip[0]
-		h.ASNOrg = getAsnOrg(asnClient, ip[0])
-		h.ASNCountry = getAsnCountry(asnClient, ip[0])
 
 		hosts = append(hosts, h)
 	}
@@ -86,15 +79,13 @@ func getMXRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnm
 }
 
 // fetch all host records and return array of hosts
-func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *asnmap.Client) []Host {
+func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX) []Host {
 	var hosts []Host
 	for _, a := range r.A {
 		var h Host
 
 		h.Name = r.Host
 		h.IP = a
-		h.ASNOrg = getAsnOrg(asnClient, a)
-		h.ASNCountry = getAsnCountry(asnClient, a)
 
 		hosts = append(hosts, h)
 	}
@@ -102,28 +93,8 @@ func getHostRecords(r *retryabledns.DNSData, dnsClient *dnsx.DNSX, asnClient *as
 	return hosts
 }
 
-// helper to get the ASNOrg data from an ip
-func getAsnOrg (c *asnmap.Client, host string) string {
-	asn, err := c.GetData(host)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return asn[0].Org
-}
-
-// helper to get the ASNCountry from an ip
-func getAsnCountry (c *asnmap.Client, host string) string {
-	asn, err := c.GetData(host)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return asn[0].Country
-}
-
-// configure dsnx and asnmap client
-func setupClients() (*dnsx.DNSX, *asnmap.Client) {
+// configure dsnx client
+func setupClients() (*dnsx.DNSX) {
 	dnsClient, err := dnsx.New(dnsx.Options{
 		BaseResolvers: dnsx.DefaultResolvers,
 		MaxRetries: 3,
@@ -137,10 +108,5 @@ func setupClients() (*dnsx.DNSX, *asnmap.Client) {
 		log.Fatal(err)
 	}
 
-	asnClient, err := asnmap.NewClient()
-	if  err != nil {
-		log.Fatal(err)
-	}
-
-	return dnsClient, asnClient
+	return dnsClient
 }
