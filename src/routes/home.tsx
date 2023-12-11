@@ -77,121 +77,129 @@ export default function Home() {
           </button>
         </form>
       </div>
-      {jsonData && jsonData.data?.nameservers != null ? (
-        <div className="my-24 space-y-4">
-          <h2 className="text-lg font-black text-black dark:text-white">
-            {jsonData.data.domain}
-          </h2>
-          {jsonData.data.nameservers ? (
-            <div className="flex flex-col overflow-x-auto">
-              <h2 className="font-bold text-black dark:text-white">
-                NS Records
-              </h2>
-              <table className="mt-4 w-full table-auto">
-                <thead>
-                  <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      Host
-                    </th>
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      IP
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
-                  {jsonData.data.nameservers.map((ns) => (
-                    <tr>
-                      <td className="px-4 py-2 text-left text-sm">{ns.name}</td>
-                      <td className="px-4 py-2 text-left text-sm">{ns.ip}</td>
+      {jsonData ? (
+        jsonData.data?.nameservers != null ? (
+          <div className="my-24 space-y-4">
+            <h2 className="text-lg font-black text-black dark:text-white">
+              {jsonData.data.domain}
+            </h2>
+            {jsonData.data.nameservers ? (
+              <div className="flex flex-col overflow-x-auto">
+                <h2 className="font-bold text-black dark:text-white">
+                  NS Records
+                </h2>
+                <table className="mt-4 w-full table-auto">
+                  <thead>
+                    <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        Host
+                      </th>
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        IP
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-          {jsonData.data.mx ? (
-            <div className="flex flex-col overflow-x-auto">
-              <h2 className="font-bold text-black dark:text-white">
-                MX Records
-              </h2>
-              <table className="mt-4 w-full table-auto">
-                <thead>
-                  <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      Host
-                    </th>
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      IP
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
-                  {jsonData.data.mx.map((m) => (
-                    <tr>
-                      <td className="px-4 py-2 text-left text-sm">{m.name}</td>
-                      <td className="px-4 py-2 text-left text-sm">{m.ip}</td>
+                  </thead>
+                  <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
+                    {jsonData.data.nameservers.map((ns) => (
+                      <tr key={`${ns.name}/${ns.ip}`}>
+                        <td className="px-4 py-2 text-left text-sm">
+                          {ns.name}
+                        </td>
+                        <td className="px-4 py-2 text-left text-sm">{ns.ip}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+            {jsonData.data.mx ? (
+              <div className="flex flex-col overflow-x-auto">
+                <h2 className="font-bold text-black dark:text-white">
+                  MX Records
+                </h2>
+                <table className="mt-4 w-full table-auto">
+                  <thead>
+                    <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        Host
+                      </th>
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        IP
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-          {jsonData.data.txt ? (
-            <div className="flex flex-col overflow-x-auto">
-              <h2 className="font-bold text-black dark:text-white">
-                TXT Records
-              </h2>
-              <table className="mt-4 w-full table-auto">
-                <thead>
-                  <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      Value
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
-                  {jsonData.data.txt.map((t) => (
-                    <tr>
-                      <td className="px-4 py-2 text-left text-sm">{t}</td>
+                  </thead>
+                  <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
+                    {jsonData.data.mx.map((m) => (
+                      <tr key={`${m.name}/${m.ip}`}>
+                        <td className="px-4 py-2 text-left text-sm">
+                          {m.name}
+                        </td>
+                        <td className="px-4 py-2 text-left text-sm">{m.ip}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+            {jsonData.data.txt ? (
+              <div className="flex flex-col overflow-x-auto">
+                <h2 className="font-bold text-black dark:text-white">
+                  TXT Records
+                </h2>
+                <table className="mt-4 w-full table-auto">
+                  <thead>
+                    <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        Value
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-          {jsonData.data.host ? (
-            <div className="flex flex-col overflow-x-auto">
-              <h2 className="font-bold text-black dark:text-white">
-                A Records
-              </h2>
-              <table className="mt-4 w-full table-auto">
-                <thead>
-                  <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      Host
-                    </th>
-                    <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
-                      IP
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
-                  {jsonData.data.host.map((h) => (
-                    <tr>
-                      <td className="px-4 py-2 text-left text-sm">{h.name}</td>
-                      <td className="px-4 py-2 text-left text-sm">{h.ip}</td>
+                  </thead>
+                  <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
+                    {jsonData.data.txt.map((t) => (
+                      <tr key={t}>
+                        <td className="px-4 py-2 text-left text-sm">{t}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+            {jsonData.data.host ? (
+              <div className="flex flex-col overflow-x-auto">
+                <h2 className="font-bold text-black dark:text-white">
+                  A Records
+                </h2>
+                <table className="mt-4 w-full table-auto">
+                  <thead>
+                    <tr className="border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-black">
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        Host
+                      </th>
+                      <th className="px-4 py-2 text-left text-xs uppercase text-neutral-500">
+                        IP
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-        </div>
-      ) : (
-        <p className="mt-10 text-center text-neutral-500">
-          this domain is either unregisitered or contains an invalid tld
-        </p>
-      )}
+                  </thead>
+                  <tbody className="divide-y divide-neutral-300 pt-4 dark:divide-neutral-700">
+                    {jsonData.data.host.map((h) => (
+                      <tr key={`${h.name}/${h.ip}`}>
+                        <td className="px-4 py-2 text-left text-sm">
+                          {h.name}
+                        </td>
+                        <td className="px-4 py-2 text-left text-sm">{h.ip}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <p className="mt-10 text-center text-neutral-500">
+            this domain is either unregisitered or contains an invalid tld
+          </p>
+        )
+      ) : null}
     </div>
   );
 }
