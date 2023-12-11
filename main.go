@@ -1,51 +1,38 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
 	"log"
-	"net/http"
 
-	"github.com/asaskevich/govalidator"
-	"github.com/cazcik/utils/handler"
+	"github.com/cazcik/dnsd/handler"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/template/html/v2"
 )
 
 func main() {
-	// create index.html template
-	web := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("views/index.html"))
-		tmpl.Execute(w, nil)
-	}
+	engine := html.New("dist", ".html")
 
-	// create results.html template
-	results := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("views/results.html"))
-		domain := r.PostFormValue("domain")
+	app := fiber.New(fiber.Config{Views: engine})
 
-		// if PostFormValue is not a domain, return invalid template
-		if (!govalidator.IsDNSName(domain)) {
-			log.Printf("[invalid lookup]: %s\n", domain)
-			invStr := fmt.Sprintf("<div class='flex items-center justify-center'><p class='flex text-neutral-500'>invalid domain: %s</p></div>", domain)
-			tmpl, _ := template.New("invalid").Parse(invStr)
-			tmpl.Execute(w, invStr)
-			return
-		}
+	app.Use(helmet.New())
 
-		// assuming valid domain call handler.GetDomain to retrieve the hosts data
-		log.Printf("[lookup]: %s\n", domain)
-		response, err := handler.GetDomain(domain)
-		if err != nil {
-			log.Fatal(err)
-		}
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "*",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE",
+		AllowCredentials: true,
+	}))
 
-		// execute and pass hosts data to results.html template
-		tmpl.Execute(w, response)
-	}
+	api := app.Group("/api", logger.New())
+	api.Get("/", func(c *fiber.Ctx) error {
+		return c.Status(200).JSON(fiber.Map{"message": nil, "status": "success", "data": nil, })
+	})
+	api.Post("/lookup", handler.Lookup)
 
-	// routing
-	http.HandleFunc("/", web)
-	http.HandleFunc("/domain", results)
+	app.Static("/", "dist")
+	app.Static("*", "./dist/index.html")
 
-	// start the http server
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(app.Listen(":8080"))
 }
